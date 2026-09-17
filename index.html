@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GoPholyo — Drawing & Layout Studio</title>
+  <meta name="description" content="Prepare architectural drawings and automatically compose presentation boards." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236746e8'/%3E%3Ctext x='7' y='24' font-family='Arial' font-weight='bold' font-size='25' fill='white'%3Eg%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="GoPholyo home"><span class="brand-mark">g</span><span>GoPholyo</span></a>
+    <span class="product-name">Drawing &amp; Layout Studio</span>
+    <span id="saveStatus" class="save-status">Ready</span>
+    <button id="openProjectBtn" class="ghost">Open project</button>
+    <button id="saveProjectBtn" class="ghost">Save project</button>
+    <button id="exportBtn" class="primary" disabled>Export ↗</button>
+  </header>
+
+  <div class="app-shell">
+    <nav class="steps" aria-label="Workflow steps">
+      <button class="step active" data-step="1"><span>01</span><b>Upload</b></button>
+      <button class="step" data-step="2"><span>02</span><b>Linework</b><small>Optional</small></button>
+      <button class="step" data-step="3"><span>03</span><b>Layout</b></button>
+      <button class="step" data-step="4"><span>04</span><b>Fine tune</b></button>
+    </nav>
+
+    <aside id="controlPanel" class="control-panel"></aside>
+
+    <main class="workspace">
+      <div class="workspace-head">
+        <div>
+          <span class="eyebrow" id="workspaceEyebrow">STEP 01</span>
+          <h1 id="workspaceTitle">Bring your drawings</h1>
+        </div>
+        <div class="workspace-actions" id="workspaceActions"></div>
+      </div>
+      <section id="workspaceBody" class="workspace-body"></section>
+    </main>
+  </div>
+
+  <input id="fileInput" type="file" hidden multiple accept=".svg,.png,.jpg,.jpeg,.pdf,image/png,image/jpeg,image/svg+xml,application/pdf" />
+  <input id="projectInput" type="file" hidden accept=".json,.gopholyo.json" />
+
+  <dialog id="exportDialog">
+    <form method="dialog">
+      <h2>Export presentation board</h2>
+      <p>The PDF keeps the selected board dimensions. Drawing scale labels are metadata unless the source has been calibrated.</p>
+      <label class="field">Format
+        <select id="exportFormat">
+          <option value="pdf">PDF — presentation board</option>
+          <option value="png">PNG — high resolution image</option>
+        </select>
+      </label>
+      <div class="dialog-actions">
+        <button value="cancel">Cancel</button>
+        <button id="downloadExportBtn" type="button" class="primary">Download</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
